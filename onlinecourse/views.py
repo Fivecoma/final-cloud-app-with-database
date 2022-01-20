@@ -145,12 +145,17 @@ def show_exam_result(request, course_id, submission_id):
     course = get_object_or_404(Course, pk=course_id)
     submission = get_object_or_404(Submission, pk=submission_id)
     choices = submission.choices.all()
-    total_score = 0
+    score = 0
+    max_score = 0
     selected_ids = []
     for choice in choices:
         selected_ids.append(choice.id)
-        if choice.is_correct == True:
-            total_score += 1
+    questions = course.question_set.all()
+    for question in questions:
+        max_score += question.mark
+        if question.is_get_score(selected_ids):
+            score += question.mark
+    total_score = int(100*score/max_score)
     context['grade'] = total_score
     context['course'] = course
     context['selected_ids'] = selected_ids
