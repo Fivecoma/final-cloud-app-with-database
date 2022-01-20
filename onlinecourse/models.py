@@ -102,10 +102,10 @@ class Enrollment(models.Model):
     # Has question content
     # Other fields and methods you would like to design
 class Question(models.Model):
-    # Foreign key to lesson
+    # Foreign key to course
     # question text
     # question grade/mark
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     content = models.TextField()
     mark = models.IntegerField(default=0)
 
